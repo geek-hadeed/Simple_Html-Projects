@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Login Page </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Login Page </h1>
+        <form class = "form-group">
+            <label for="username" class = "login-form">Username:</label>
+            <input type="text" id="username" name="username" required class = "login-form">
+            <label for="password" class = "login-form">Password:</label>
+            <input type="password" id="password" name="password" required class = "login-form">
+            <div class="error" id="error" class = "login-form" ></div>
+            
+            <button type="submit"> Sign in </button>
+            
+        </form>
+    </div>
+
+    <div class="footer">
+        Created by Hadeed Hussain
+    </div>
+
+
+    <script>
+        const form = document.querySelector("form");
+        const errorDiv = document.getElementById("error");
+    
+        form.addEventListener("submit", (event) => {
+          event.preventDefault(); // Prevent form submission
+    
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+    
+          // Basic validation
+        if (username === "" || password === "") {
+            errorDiv.textContent = "Please fill in all fields";
+            return;
+        }
+    
+          // Replace this with your actual authentication logic
+        if (username === "hadeed-hussain" && password === "hadeed") {
+        errorDiv.textContent = "Login successful!";
+        // Redirect to your Linkedin account
+        window.location.href = "https://www.linkedin.com/in/hadeed-hussain/"; 
+      } else {
+        errorDiv.textContent = "Invalid username or password";
+        }
+        });
+
+    </script>
+
+</body>
+</html>
