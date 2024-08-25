@@ -1,0 +1,105 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('./Images/bg.jpg'); /* add background image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+  }
+  
+  .app-container {
+    max-width: 550px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #bdf1cf;
+    border: 1px solid #bfcef7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .app-header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .app-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #task-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .btn-add-task {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .btn-add-task:hover {
+    background-color: #3e8e41;
+  }
+  
+  .app-main {
+    padding: 20px;
+  }
+  
+  .task-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .task-item {
+    margin-bottom: 20px;
+  }
+  
+  .task-item .card {
+    background-color: #b0fd98;
+    padding: 5px;
+    border: 1px solid #164428;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-item .task-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .task-item .task-description {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .task-item .actions {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .task-item .actions button {
+    background-color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .task-item .actions button:hover {
+    background-color: #f7f7f7;
+  }
