@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unit Converter</h1>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fromUnit">From:</label>
+            <select id="fromUnit"></select>
+        </div>
+        <div class="form-group">
+            <label for="toUnit">To:</label>
+            <select id="toUnit"></select>
+        </div>
+        <div class="form-group">
+            <label for="inputValue">Value:</label>
+            <input type="number" id="inputValue" step="any">
+        </div>
+        <button id="convert">Convert</button>
+        <div id="result" aria-live="polite"></div>
+    </div>
+
+    <script>
+        const categorySelect = document.getElementById('category');
+        const fromUnitSelect = document.getElementById('fromUnit');
+        const toUnitSelect = document.getElementById('toUnit');
+        const inputValue = document.getElementById('inputValue');
+        const convertBtn = document.getElementById('convert');
+        const resultDiv = document.getElementById('result');
+
+        const units = {
+            length: ['Meters', 'Kilometers', 'Centimeters', 'Millimeters', 'Miles', 'Yards', 'Feet', 'Inches'],
+            weight: ['Kilograms', 'Grams', 'Milligrams', 'Pounds', 'Ounces'],
+            temperature: ['Celsius', 'Fahrenheit', 'Kelvin']
+        };
+
+        function populateUnitSelects(category) {
+            fromUnitSelect.innerHTML = '';
+            toUnitSelect.innerHTML = '';
+            units[category].forEach(unit => {
+                fromUnitSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toUnitSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+        }
+
+        categorySelect.addEventListener('change', () => {
+            populateUnitSelects(categorySelect.value);
+        });
+
+        convertBtn.addEventListener('click', () => {
+            const fromUnit = fromUnitSelect.value;
+            const toUnit = toUnitSelect.value;
+            const value = parseFloat(inputValue.value);
+
+            if (isNaN(value)) {
+                resultDiv.textContent = 'Please enter a valid number';
+                return;
+            }
+
+            let result;
+            if (categorySelect.value === 'temperature') {
+                result = convertTemperature(value, fromUnit, toUnit);
+            } else {
+                result = convertUnit(value, fromUnit, toUnit);
+            }
+
+            resultDiv.textContent = `${value} ${fromUnit} = ${result.toFixed(4)} ${toUnit}`;
+        });
+
+        function convertUnit(value, fromUnit, toUnit) {
+            const conversionRates = {
+                Meters: 1,
+                Kilometers: 0.001,
+                Centimeters: 100,
+                Millimeters: 1000,
+                Miles: 0.000621371,
+                Yards: 1.09361,
+                Feet: 3.28084,
+                Inches: 39.3701,
+                Kilograms: 1,
+                Grams: 1000,
+                Milligrams: 1000000,
+                Pounds: 2.20462,
+                Ounces: 35.274
+            };
+
+            const valueInBaseUnit = value / conversionRates[fromUnit];
+            return valueInBaseUnit * conversionRates[toUnit];
+        }
+
+        function convertTemperature(value, fromUnit, toUnit) {
+            if (fromUnit === toUnit) return value;
+
+            let celsius;
+            switch (fromUnit) {
+                case 'Celsius':
+                    celsius = value;
+                    break;
+                case 'Fahrenheit':
+                    celsius = (value - 32) * 5/9;
+                    break;
+                case 'Kelvin':
+                    celsius = value - 273.15;
+                    break;
+            }
+
+            switch (toUnit) {
+                case 'Celsius':
+                    return celsius;
+                case 'Fahrenheit':
+                    return (celsius * 9/5) + 32;
+                case 'Kelvin':
+                    return celsius + 273.15;
+            }
+        }
+
+        // Initialize unit selects
+        populateUnitSelects(categorySelect.value);
+    </script>
+</body>
+</html>

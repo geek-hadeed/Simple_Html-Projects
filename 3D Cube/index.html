@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Cube</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-family: Arial, sans-serif;
+            border: 2px solid #333;
+        }
+        .front  { transform: rotateY(0deg) translateZ(100px); background-color: #ff69b4; } /* pink */
+        .right  { transform: rotateY(90deg) translateZ(100px); background-color: #33cc33; } /* green */
+        .back   { transform: rotateY(180deg) translateZ(100px); background-color: #6666ff; } /* blue */
+        .left   { transform: rotateY(-90deg) translateZ(100px); background-color: #ffff00; } /* yellow */
+        .top    { transform: rotateX(90deg) translateZ(100px); background-color: #ff9900; } /* orange */
+        .bottom { transform: rotateX(-90deg) translateZ(100px); background-color: #0099ff; } /* cyan */
+    </style>
+</head>
+<body>
+    <div class="cube">
+        <div class="face front">Front</div>
+        <div class="face back">Back</div>
+        <div class="face right">Right</div>
+        <div class="face left">Left</div>
+        <div class="face top">Top</div>
+        <div class="face bottom">Bottom</div>
+    </div>
+    <script>
+        const cube = document.querySelector('.cube');
+        let rotateX = 0;
+        let rotateY = 0;
+        let isMouseDown = false;
+        let lastMouseX, lastMouseY;
+
+        function rotateCube(e) {
+            if (!isMouseDown) return;
+            const deltaX = e.clientX - lastMouseX;
+            const deltaY = e.clientY - lastMouseY;
+            rotateY += deltaX * 0.5;
+            rotateX -= deltaY * 0.5;
+            cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        }
+
+        document.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+
+        document.addEventListener('mousemove', rotateCube);
+
+        // Touch events for mobile devices
+        document.addEventListener('touchstart', (e) => {
+            isMouseDown = true;
+            lastMouseX = e.touches[0].clientX;
+            lastMouseY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', () => {
+            isMouseDown = false;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isMouseDown) return;
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - lastMouseX;
+            const deltaY = touch.clientY - lastMouseY;
+            rotateY += deltaX * 0.5;
+            rotateX -= deltaY * 0.5;
+            cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            lastMouseX = touch.clientX;
+            lastMouseY = touch.clientY;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Feedback Survey</h1>
+        <form id="surveyForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="entry.1234567890" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="entry.2345678901" required>
+
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="entry.3456789012" required>
+
+            <label for="satisfaction">Overall Satisfaction:</label>
+            <select id="satisfaction" name="entry.4567890123" required>
+                <option value="">Please select</option>
+                <option value="Very Satisfied">Very Satisfied</option>
+                <option value="Satisfied">Satisfied</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Dissatisfied">Dissatisfied</option>
+                <option value="Very Dissatisfied">Very Dissatisfied</option>
+            </select>
+
+            <label for="feedback">Additional Feedback:</label>
+            <textarea id="feedback" name="entry.5678901234"></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('surveyForm');
+        const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // Basic form validation
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    showError(field, 'This field is required');
+                } else {
+                    clearError(field);
+                }
+            });
+
+            if (!isValid) return;
+
+            // Prepare form data
+            const formData = new FormData(form);
+            
+            // Send form data to Google Form
+            fetch(GOOGLE_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                alert('Thank you for your feedback!');
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        });
+
+        function showError(field, message) {
+            clearError(field);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            field.parentNode.insertBefore(errorDiv, field.nextSibling);
+        }
+
+        function clearError(field) {
+            const error = field.parentNode.querySelector('.error');
+            if (error) {
+                error.remove();
+            }
+        }
+    </script>
+</body>
+</html>
