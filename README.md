@@ -13,7 +13,6 @@ A collection of simple HTML projects. Click on the links below to explore each p
 - [Navigation Bar](https://geek-hadeed.github.io/Simple_Html-Projects/Nav%20Bar/)
 - [Password Generator](https://geek-hadeed.github.io/Simple_Html-Projects/Password%20Generator/)
 - [Profile Card](https://geek-hadeed.github.io/Simple_Html-Projects/Profile%20Card)
-- [Profile Card](https://geek-hadeed.github.io/Simple_Html-Projects/Profile%20Card)
 - [Random Quote Generator](https://geek-hadeed.github.io/Simple_Html-Projects/Random%20Quote%20Generator)
 - [Rock Paper Scissor](https://geek-hadeed.github.io/Simple_Html-Projects/Rock%20Paper%20Scissor)
 - [Stop Watch](https://geek-hadeed.github.io/Simple_Html-Projects/Stop%20watch)
