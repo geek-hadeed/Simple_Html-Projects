@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Rotating Cube</title>
+    <title>3D Rotating Cube with Cars</title>
     <style>
         body {
             margin: 0;
@@ -12,96 +13,105 @@
             justify-content: center;
             align-items: center;
             perspective: 1000px;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
+
+        .scene {
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+        }
+
         .cube {
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.5s;
+            transform: translateZ(-150px);
+            animation: rotate 20s infinite linear;
         }
+
         .face {
             position: absolute;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            font-family: Arial, sans-serif;
-            border: 2px solid #333;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
-        .front  { transform: rotateY(0deg) translateZ(100px); background-color: #ff69b4; } /* pink */
-        .right  { transform: rotateY(90deg) translateZ(100px); background-color: #33cc33; } /* green */
-        .back   { transform: rotateY(180deg) translateZ(100px); background-color: #6666ff; } /* blue */
-        .left   { transform: rotateY(-90deg) translateZ(100px); background-color: #ffff00; } /* yellow */
-        .top    { transform: rotateX(90deg) translateZ(100px); background-color: #ff9900; } /* orange */
-        .bottom { transform: rotateX(-90deg) translateZ(100px); background-color: #0099ff; } /* cyan */
+
+        .front {
+            transform: rotateY(0deg) translateZ(150px);
+            background-image: url('Images/1.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(150px);
+            background-image: url('Images/2.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .back {
+            transform: rotateY(180deg) translateZ(150px);
+            background-image: url('Images/3.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .left {
+            transform: rotateY(-90deg) translateZ(150px);
+            background-image: url('Images/4.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(150px);
+            background-image: url('Images/5.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bottom {
+            transform: rotateX(-90deg) translateZ(150px);
+            background-image: url('Images/6.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: translateZ(-150px) rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+                transform: translateZ(-150px) rotateX(360deg) rotateY(360deg);
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="cube">
-        <div class="face front">Front</div>
-        <div class="face back">Back</div>
-        <div class="face right">Right</div>
-        <div class="face left">Left</div>
-        <div class="face top">Top</div>
-        <div class="face bottom">Bottom</div>
+    <div class="scene">
+        <div class="cube">
+            <div class="face front">
+            </div>
+            <div class="face back">
+            </div>
+            <div class="face right">
+            </div>
+            <div class="face left">
+            </div>
+            <div class="face top">
+            </div>
+            <div class=" face bottom">
+            </div>
+        </div>
     </div>
-    <script>
-        const cube = document.querySelector('.cube');
-        let rotateX = 0;
-        let rotateY = 0;
-        let isMouseDown = false;
-        let lastMouseX, lastMouseY;
-
-        function rotateCube(e) {
-            if (!isMouseDown) return;
-            const deltaX = e.clientX - lastMouseX;
-            const deltaY = e.clientY - lastMouseY;
-            rotateY += deltaX * 0.5;
-            rotateX -= deltaY * 0.5;
-            cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-        }
-
-        document.addEventListener('mousedown', (e) => {
-            isMouseDown = true;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-        });
-
-        document.addEventListener('mouseup', () => {
-            isMouseDown = false;
-        });
-
-        document.addEventListener('mousemove', rotateCube);
-
-        // Touch events for mobile devices
-        document.addEventListener('touchstart', (e) => {
-            isMouseDown = true;
-            lastMouseX = e.touches[0].clientX;
-            lastMouseY = e.touches[0].clientY;
-        });
-
-        document.addEventListener('touchend', () => {
-            isMouseDown = false;
-        });
-
-        document.addEventListener('touchmove', (e) => {
-            if (!isMouseDown) return;
-            const touch = e.touches[0];
-            const deltaX = touch.clientX - lastMouseX;
-            const deltaY = touch.clientY - lastMouseY;
-            rotateY += deltaX * 0.5;
-            rotateX -= deltaY * 0.5;
-            cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            lastMouseX = touch.clientX;
-            lastMouseY = touch.clientY;
-        });
-    </script>
 </body>
+
 </html>
